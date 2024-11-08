@@ -11,14 +11,14 @@ const config: Config = {
   	extend: {
   		colors: {
   			black: {
-  				'06': '#0F0F0F',
-  				'08': '#141414',
   				'10': '#1A1A1A',
   				'12': '#1F1F1F',
   				'15': '#262626',
   				'20': '#333333',
   				'25': '#404040',
-  				'30': '#4C4C4C'
+  				'30': '#4C4C4C',
+  				'06': '#0F0F0F',
+  				'08': '#141414'
   			},
   			red: {
   				'45': '#e50000',
@@ -85,6 +85,28 @@ const config: Config = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
+  		},
+  		keyframes: {
+  			'accordion-down': {
+  				from: {
+  					height: '0'
+  				},
+  				to: {
+  					height: 'var(--radix-accordion-content-height)'
+  				}
+  			},
+  			'accordion-up': {
+  				from: {
+  					height: 'var(--radix-accordion-content-height)'
+  				},
+  				to: {
+  					height: '0'
+  				}
+  			}
+  		},
+  		animation: {
+  			'accordion-down': 'accordion-down 0.2s ease-out',
+  			'accordion-up': 'accordion-up 0.2s ease-out'
   		}
   	}
   },

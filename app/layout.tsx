@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${manrope.className} bg-[#1e1e1e] text-white min-h-screen`}
+        className={`${manrope.className} bg-[#141414] text-white min-h-screen`}
       >
         <Navbar />
         <main>{children}</main>
