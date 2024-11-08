@@ -29,15 +29,18 @@ const HeroImages = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-center py-3 gap-5 w-full px-4">
-      {Array.from({ length: itemsToShow }).map((_, index) => (
-        <div
-          key={index}
-          className="bg-red-500 rounded-xl w-full h-52 shadow-lg"
-        >
-          Content {index + 1}
-        </div>
-      ))}
+    <div className="w-full">
+      {/* Hero Images Grid */}
+      <div className="flex items-center justify-center py-3 gap-5 w-full px-4 z-0">
+        {Array.from({ length: itemsToShow }).map((_, index) => (
+          <div
+            key={index}
+            className="bg-red-500 rounded-xl w-full h-52 shadow-lg"
+          >
+            Content {index + 1}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

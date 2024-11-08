@@ -5,7 +5,11 @@ interface WrapperProps {
 }
 
 const Wrapper = ({ children }: WrapperProps) => {
-  return <div className="mx-auto px-[162px] py-[30px] ">{children}</div>;
+  return (
+    <>
+      <div className="mx-auto px-[162px] py-[30px] ">{children}</div>
+    </>
+  );
 };
 
 export default Wrapper;
