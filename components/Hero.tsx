@@ -24,7 +24,7 @@ const Hero = () => {
           Watch your favorite movies, TV shows, and series with our premium
           streaming service.
         </p>
-        <button className="bg-red-600 hover:bg-red-500 text-white px-6 py-3 md:px-8 md:py-4 rounded-full font-medium text-sm md:text-base lg:text-lg">
+        <button className="bg-red-600 hover:bg-red-500 text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-medium text-sm md:text-base lg:text-lg">
           Start Watching Now
         </button>
       </div>
