@@ -1,18 +1,38 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Wrapper from "./Wrapper";
 import { HiArrowSmLeft, HiArrowSmRight } from "react-icons/hi";
+import CategoryCard from "./Cards/CategoryCard";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
 
 const Categories = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
-  // Update the active index when left or right arrow is clicked
+  const scrollAmount = 300;
+
   const handleLeftClick = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({
+        left: -scrollAmount,
+        behavior: "smooth",
+      });
+    }
     setActiveIndex((prevIndex) => (prevIndex === 0 ? 3 : prevIndex - 1));
   };
 
   const handleRightClick = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({
+        left: scrollAmount,
+        behavior: "smooth",
+      });
+    }
     setActiveIndex((prevIndex) => (prevIndex === 3 ? 0 : prevIndex + 1));
   };
 
@@ -37,26 +57,14 @@ const Categories = () => {
             <HiArrowSmLeft size={20} />
           </div>
           {/* Indicators */}
-          <div
-            className={`w-[23px] h-[4px] ${
-              activeIndex === 0 ? "bg-red-45" : "bg-black-20"
-            } rounded-full`}
-          ></div>
-          <div
-            className={`w-[23px] h-[4px] ${
-              activeIndex === 1 ? "bg-red-45" : "bg-black-20"
-            } rounded-full`}
-          ></div>
-          <div
-            className={`w-[23px] h-[4px] ${
-              activeIndex === 2 ? "bg-red-45" : "bg-black-20"
-            } rounded-full`}
-          ></div>
-          <div
-            className={`w-[23px] h-[4px] ${
-              activeIndex === 3 ? "bg-red-45" : "bg-black-20"
-            } rounded-full`}
-          ></div>
+          {[...Array(4)].map((_, index) => (
+            <div
+              key={index}
+              className={`w-[23px] h-[4px] ${
+                activeIndex === index ? "bg-red-45" : "bg-black-20"
+              } rounded-full`}
+            ></div>
+          ))}
           {/* Right Arrow */}
           <div
             className="bg-black-10 ring-black-12 p-4 rounded-lg hover:bg-black-25 cursor-pointer"
@@ -66,6 +74,21 @@ const Categories = () => {
           </div>
         </div>
       </div>
+
+      <Carousel className="mt-10 flex items-center justify-center gap-8 w-full">
+        <CarouselContent
+          ref={carouselRef}
+          className="flex overflow-x-scroll no-scrollbar -ml-1"
+        >
+          {Array.from({ length: 10 }).map((_, index) => (
+            <CarouselItem key={index} className="pl-1 lg:basis-auto ml-3 mt-3">
+              <div className="shadow-lg rounded-lg">
+                <CategoryCard title={`Category ${index + 1}`} />
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
     </Wrapper>
   );
 };
