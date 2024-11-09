@@ -19,7 +19,7 @@ const CTA = () => {
         />
 
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black-08 via-black-06 to-red-45 opacity-50 z-10 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black-08 via-black-06 to-black-20 opacity-50 z-10 pointer-events-none" />
 
         {/* Text Container */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white z-20">
