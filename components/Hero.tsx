@@ -8,11 +8,15 @@ const Hero = () => {
       {/* Background Image */}
       <div className="absolute inset-0 -z-10">
         {/* Top Gradient Overlay */}
-        <div className="" />
+        <div className="relative" />
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black-08 via-black-06 to-transparent opacity-75 z-10 pointer-events-none" />
         <HeroImages />
         <HeroImages />
         <HeroImages />
         <HeroImages />
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black-08 via-black-06 to-transparent opacity-75 z-10 pointer-events-none" />
       </div>
 
       {/* Text and Button Section */}
