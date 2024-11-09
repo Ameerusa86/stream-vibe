@@ -18,7 +18,7 @@ const Devices = () => {
           wide range of devices, ensuring that you never miss a moment of
           entertainment.{" "}
         </p>
-        <div className="mt-20 flex flex-wrap gap-4 w-full">
+        <div className="mt-20 flex flex-wrap items-end justify-center gap-4 w-full">
           <DeviceCard
             deviceType="Smartphone"
             icon={<FaMobileScreen size={20} />}
