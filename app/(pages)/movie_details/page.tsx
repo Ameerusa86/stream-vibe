@@ -1,7 +1,8 @@
+import Wrapper from "@/components/Wrapper";
 import React from "react";
 
 const MovieDetails = () => {
-  return <div>MovieDetails</div>;
+  return <Wrapper>MovieDetails</Wrapper>;
 };
 
 export default MovieDetails;
