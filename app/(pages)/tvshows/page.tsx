@@ -1,6 +1,7 @@
 "use client";
 
 import MediaCard from "@/components/Cards/MediaCard";
+import { PaginationComponent } from "@/components/Pagination";
 import { fetchTvShows } from "@/services/TMDBapi";
 import { TvShow } from "@/Types/types";
 import React, { useEffect, useState } from "react";
@@ -45,6 +46,13 @@ const TVShowsPage = () => {
       {tvshows.map((tvshow) => (
         <MediaCard key={tvshow.id} item={tvshow} type="tv" />
       ))}
+
+      {/* Pagination */}
+      <PaginationComponent
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };
