@@ -8,13 +8,13 @@ const PricingTable = () => {
       <table className="min-w-full bg-black-10 border border-black-20 rounded-lg">
         <thead className=" bg-black-06">
           <tr>
-            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-300">
+            <th className="px-4 py-3 text-center text-sm font-semibold text-gray-300">
               Features
             </th>
-            <th className="px-4 py-3 text-left text-sm font-semibold text-white">
+            <th className="px-4 py-3 text-center text-sm font-semibold text-white">
               Basic
             </th>
-            <th className="px-4 py-3 text-left text-sm font-semibold text-white relative">
+            <th className="px-4 py-3 text-center text-sm font-semibold text-white relative">
               Standard
               <div className="absolute -top-3 -right-2">
                 <Badge variant="destructive" className="text-xs px-2 py-1 mt-5">
@@ -22,12 +22,12 @@ const PricingTable = () => {
                 </Badge>
               </div>
             </th>
-            <th className="px-4 py-3 text-left text-sm font-semibold text-white">
+            <th className="px-4 py-3 text-center text-sm font-semibold text-white">
               Premium
             </th>
           </tr>
         </thead>
-        <tbody className="text-sm">
+        <tbody className="text-sm text-center">
           <tr className="border-t border-gray-700">
             <td className="px-4 py-3 text-gray-400">Price</td>
             <td className="px-4 py-3 text-white">$9.99/Month</td>
