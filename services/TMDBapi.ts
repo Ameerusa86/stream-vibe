@@ -2,6 +2,7 @@ import {
   ApiResponse,
   CastMember,
   CreditsResponse,
+  Genre,
   Movie,
   TvShow,
 } from "@/Types/types";
@@ -30,6 +31,37 @@ export const fetchMovies = async (page: number = 1): Promise<Movie[]> => {
   }
 };
 
+// Get Movie Genres
+export const fetchGenres = async (): Promise<Genre[]> => {
+  try {
+    const response = await apiClient.get<ApiResponse<Genre>>(
+      "/genre/movie/list"
+    );
+    return response.data.genres || [];
+  } catch (error) {
+    console.error("Error fetching genres:", error);
+    throw error;
+  }
+};
+
+// Fetch trending movies with pagination
+export const fetchTrendingMovies = async (
+  page: number = 1
+): Promise<Movie[]> => {
+  try {
+    const response = await apiClient.get<ApiResponse<Movie>>(
+      `/trending/movie/day`,
+      {
+        params: { page },
+      }
+    );
+    return response.data.results || [];
+  } catch (error) {
+    console.error("Error fetching trending movies:", error);
+    throw error;
+  }
+};
+
 // Fetch trending TV shows with pagination
 export const fetchTvShows = async (page: number = 1): Promise<TvShow[]> => {
   try {
@@ -42,6 +74,25 @@ export const fetchTvShows = async (page: number = 1): Promise<TvShow[]> => {
     return response.data.results || [];
   } catch (error) {
     console.error("Error fetching TV shows:", error);
+    throw error;
+  }
+};
+
+// Fetch combined Trending Movies and TV Shows per type
+export const fetchTrendingMedia = async (
+  type: "movie" | "tv",
+  page: number = 1
+): Promise<(Movie | TvShow)[]> => {
+  try {
+    const response = await apiClient.get<ApiResponse<Movie | TvShow>>(
+      `/trending/${type}/day`,
+      {
+        params: { page },
+      }
+    );
+    return response.data.results || [];
+  } catch (error) {
+    console.error(`Error fetching trending ${type}s:`, error);
     throw error;
   }
 };
@@ -114,6 +165,43 @@ export const fetchLatestMovies = async (page: number = 1): Promise<Movie[]> => {
   }
 };
 
+// Upcoming Movies
+export const fetchUpcomingMovies = async (
+  page: number = 1
+): Promise<Movie[]> => {
+  try {
+    const response = await apiClient.get<ApiResponse<Movie>>(
+      "/movie/upcoming",
+      {
+        params: { page },
+      }
+    );
+    return response.data.results || [];
+  } catch (error) {
+    console.error("Error fetching upcoming movies:", error);
+    throw error;
+  }
+};
+
+// Top Rated Movies & Tv shows
+export const fetchTopRatedMedia = async (
+  type: "movie" | "tv",
+  page: number = 1
+): Promise<Movie[]> => {
+  try {
+    const response = await apiClient.get<ApiResponse<Movie>>(
+      `/${type}/top_rated`,
+      {
+        params: { page },
+      }
+    );
+    return response.data.results || [];
+  } catch (error) {
+    console.error("Error fetching top rated movies:", error);
+    throw error;
+  }
+};
+
 // Search for both movies and TV shows with pagination
 export const fetchSearchResults = async (
   query: string,
@@ -143,6 +231,24 @@ export const fetchCastDetails = async (castId: number): Promise<CastMember> => {
     return response.data;
   } catch (error) {
     console.error(`Error fetching details for cast ID ${castId}:`, error);
+    throw error;
+  }
+};
+
+// Fetch on the air TV shows with pagination
+export const fetchOnTheAirTvShows = async (
+  page: number = 1
+): Promise<TvShow[]> => {
+  try {
+    const response = await apiClient.get<ApiResponse<TvShow>>(
+      "/tv/on_the_air",
+      {
+        params: { page },
+      }
+    );
+    return response.data.results || [];
+  } catch (error) {
+    console.error("Error fetching on the air TV shows:", error);
     throw error;
   }
 };
