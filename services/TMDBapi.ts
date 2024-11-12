@@ -50,7 +50,7 @@ export const fetchTrendingMovies = async (
 ): Promise<Movie[]> => {
   try {
     const response = await apiClient.get<ApiResponse<Movie>>(
-      "/trending/movie/day",
+      `/trending/movie/day`,
       {
         params: { page },
       }
@@ -74,6 +74,25 @@ export const fetchTvShows = async (page: number = 1): Promise<TvShow[]> => {
     return response.data.results || [];
   } catch (error) {
     console.error("Error fetching TV shows:", error);
+    throw error;
+  }
+};
+
+// Fetch combined Trending Movies and TV Shows per type
+export const fetchTrendingMedia = async (
+  type: "movie" | "tv",
+  page: number = 1
+): Promise<(Movie | TvShow)[]> => {
+  try {
+    const response = await apiClient.get<ApiResponse<Movie | TvShow>>(
+      `/trending/${type}/day`,
+      {
+        params: { page },
+      }
+    );
+    return response.data.results || [];
+  } catch (error) {
+    console.error(`Error fetching trending ${type}s:`, error);
     throw error;
   }
 };
@@ -164,13 +183,14 @@ export const fetchUpcomingMovies = async (
   }
 };
 
-// Top Rated Movies
-export const fetchTopRatedMovies = async (
+// Top Rated Movies & Tv shows
+export const fetchTopRatedMedia = async (
+  type: "movie" | "tv",
   page: number = 1
 ): Promise<Movie[]> => {
   try {
     const response = await apiClient.get<ApiResponse<Movie>>(
-      "/movie/top_rated",
+      `/${type}/top_rated`,
       {
         params: { page },
       }
@@ -211,6 +231,24 @@ export const fetchCastDetails = async (castId: number): Promise<CastMember> => {
     return response.data;
   } catch (error) {
     console.error(`Error fetching details for cast ID ${castId}:`, error);
+    throw error;
+  }
+};
+
+// Fetch on the air TV shows with pagination
+export const fetchOnTheAirTvShows = async (
+  page: number = 1
+): Promise<TvShow[]> => {
+  try {
+    const response = await apiClient.get<ApiResponse<TvShow>>(
+      "/tv/on_the_air",
+      {
+        params: { page },
+      }
+    );
+    return response.data.results || [];
+  } catch (error) {
+    console.error("Error fetching on the air TV shows:", error);
     throw error;
   }
 };

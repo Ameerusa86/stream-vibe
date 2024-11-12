@@ -13,6 +13,7 @@ import Genres from "../MediaLibraries/Genres";
 import TrendingMovies from "../MediaLibraries/TrendingMedia";
 import NewReleases from "../MediaLibraries/NewReleases";
 import MustWatch from "../MediaLibraries/MustWatch";
+import OnTheAirTVShows from "../MediaLibraries/OnTheAirTVshows";
 
 export const TVShows_Library = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -50,9 +51,9 @@ export const TVShows_Library = () => {
         </div>
 
         <Genres />
-        <TrendingMovies />
-        <NewReleases />
-        <MustWatch />
+        <TrendingMovies type="tv" />
+        <OnTheAirTVShows />
+        <MustWatch type="tv" />
       </div>
     </Wrapper>
   );

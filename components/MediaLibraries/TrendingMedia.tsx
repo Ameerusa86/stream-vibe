@@ -1,3 +1,4 @@
+// TrendingMedia.tsx
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
@@ -7,13 +8,17 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { fetchTrendingMovies } from "@/services/TMDBapi";
-import { Movie } from "@/Types/types";
+import { fetchTrendingMedia } from "@/services/TMDBapi";
+import { Movie, TvShow } from "@/Types/types";
 import LibCard from "../Cards/LibCard";
 import { LoadingComponent } from "../Loading";
 
-const TrendingMedia = () => {
-  const [movies, setMovies] = useState<Movie[]>([]);
+interface TrendingMediaProps {
+  type: "movie" | "tv";
+}
+
+const TrendingMedia: React.FC<TrendingMediaProps> = ({ type }) => {
+  const [media, setMedia] = useState<(Movie | TvShow)[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -39,21 +44,21 @@ const TrendingMedia = () => {
     setActiveIndex((prevIndex) => (prevIndex === 3 ? 0 : prevIndex + 1));
   };
 
-  const loadTrendingMovies = async () => {
+  const loadTrendingMedia = async () => {
     setLoading(true);
     try {
-      const fetchTrendingMoviesData = await fetchTrendingMovies();
-      setMovies(fetchTrendingMoviesData);
+      const mediaData = await fetchTrendingMedia(type);
+      setMedia(mediaData);
     } catch (error) {
-      console.error("Failed to load trending movies", error);
+      console.error(`Failed to load trending ${type}s`, error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    loadTrendingMovies();
-  }, []);
+    loadTrendingMedia();
+  }, [type]);
 
   if (loading) {
     return <LoadingComponent />;
@@ -63,7 +68,9 @@ const TrendingMedia = () => {
     <div className="mt-6">
       {/* Section Header and Controls */}
       <div className="flex items-center justify-between mb-6">
-        <h1 className="font-semibold text-lg md:text-xl">Trending</h1>
+        <h1 className="font-semibold text-lg md:text-xl">
+          Trending {type === "movie" ? "Movies" : "TV Shows"}
+        </h1>
         <div className="flex items-center gap-3">
           {/* Left Arrow */}
           <button
@@ -97,10 +104,10 @@ const TrendingMedia = () => {
           ref={carouselRef}
           className="flex overflow-x-scroll no-scrollbar -ml-1"
         >
-          {movies.map((movie, index) => (
+          {media.map((item, index) => (
             <CarouselItem key={index} className="pl-1 lg:basis-auto ml-3 mt-3">
               <div className="shadow-lg rounded-lg">
-                <LibCard item={movie} type="movie" />
+                <LibCard item={item} type={type} />
               </div>
             </CarouselItem>
           ))}

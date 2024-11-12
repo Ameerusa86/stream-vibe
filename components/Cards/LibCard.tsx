@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import { HiOutlineClock, HiOutlineUserGroup } from "react-icons/hi";
 import Link from "next/link";
+import { Movie, TvShow } from "@/Types/types";
 
 interface LibCardProps {
   item: {
@@ -20,9 +20,14 @@ const LibCard: React.FC<LibCardProps> = ({ item, type }) => {
     ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
     : "https://via.placeholder.com/200x300.png?text=No+Image";
 
-  const title = type === "movie" ? item.title : item.name;
+  const title =
+    type === "movie" ? (item as Movie).title : (item as TvShow).name;
+
   const releaseDate =
-    type === "movie" ? item.release_date : item.first_air_date;
+    type === "movie"
+      ? (item as Movie).release_date
+      : (item as TvShow).first_air_date;
+
   const releaseYear = releaseDate ? new Date(releaseDate).getFullYear() : "N/A";
 
   return (

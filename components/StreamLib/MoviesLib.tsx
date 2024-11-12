@@ -15,6 +15,31 @@ import NewReleases from "../MediaLibraries/NewReleases";
 import MustWatch from "../MediaLibraries/MustWatch";
 
 export const Movies_Library = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  const scrollAmount = 300;
+
+  const handleLeftClick = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({
+        left: -scrollAmount,
+        behavior: "smooth",
+      });
+    }
+    setActiveIndex((prevIndex) => (prevIndex === 0 ? 3 : prevIndex - 1));
+  };
+
+  const handleRightClick = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({
+        left: scrollAmount,
+        behavior: "smooth",
+      });
+    }
+    setActiveIndex((prevIndex) => (prevIndex === 3 ? 0 : prevIndex + 1));
+  };
+
   return (
     <Wrapper>
       {/* Container Frame with Movies Button */}
@@ -24,7 +49,7 @@ export const Movies_Library = () => {
           Movies
         </div>
         <Genres />
-        <TrendingMovies />
+        <TrendingMovies type="movie" />
         <NewReleases />
         <MustWatch />
       </div>
