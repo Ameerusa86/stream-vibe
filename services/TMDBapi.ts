@@ -30,6 +30,24 @@ export const fetchMovies = async (page: number = 1): Promise<Movie[]> => {
   }
 };
 
+// Fetch trending movies with pagination
+export const fetchTrendingMovies = async (
+  page: number = 1
+): Promise<Movie[]> => {
+  try {
+    const response = await apiClient.get<ApiResponse<Movie>>(
+      "/trending/movie/day",
+      {
+        params: { page },
+      }
+    );
+    return response.data.results || [];
+  } catch (error) {
+    console.error("Error fetching trending movies:", error);
+    throw error;
+  }
+};
+
 // Fetch trending TV shows with pagination
 export const fetchTvShows = async (page: number = 1): Promise<TvShow[]> => {
   try {

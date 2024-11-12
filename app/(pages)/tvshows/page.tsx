@@ -42,7 +42,7 @@ const TVShowsPage = () => {
   }
 
   return (
-    <div className="flex items-center justify-center flex-wrap gap-2">
+    <div className="flex items-center justify-center flex-wrap gap-4">
       {tvshows.map((tvshow) => (
         <MediaCard key={tvshow.id} item={tvshow} type="tv" />
       ))}

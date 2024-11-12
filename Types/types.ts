@@ -56,7 +56,13 @@ export interface TvShowCardProps {
 
 // Props for a reusable Card component that can accept either Movie or TvShow arrays
 export interface CardProps {
-  data: (Movie | TvShow)[];
+  data: any[];
+  movies?: { data: any[] }[];
+  tvshows?: { data: any[] }[];
+  title: string;
+  name: string;
+  backdrop_path: string;
+  overview: string;
 }
 
 export interface CastMember {

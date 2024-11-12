@@ -10,7 +10,7 @@ const MoviesPage = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(500); // Set the total pages here
+  const [totalPages, setTotalPages] = useState(2000); // Set the total pages here
 
   const loadMovies = async (page: number) => {
     setLoading(true);
@@ -44,7 +44,7 @@ const MoviesPage = () => {
   return (
     <div className="flex flex-col items-center">
       {/* Media Cards */}
-      <div className="flex items-center justify-center flex-wrap gap-2">
+      <div className="flex items-center justify-center flex-wrap gap-4">
         {movies.map((movie) => (
           <MediaCard key={movie.id} item={movie} type="movie" />
         ))}

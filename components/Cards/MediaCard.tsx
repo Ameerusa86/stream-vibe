@@ -26,22 +26,22 @@ const MediaCard: React.FC<MediaCardProps> = ({ item, type }) => {
 
   return (
     <Link href={`/movies/${title}`} className="group">
-      <div className="bg-black-10 p-4 rounded-lg shadow-lg w-[240px] h-[400px] md:w-[280px] md:h-[450px] flex flex-col justify-between transform transition-transform duration-300 group-hover:scale-105 group-hover:shadow-2xl">
+      <div className="bg-black-10 p-4 rounded-lg shadow-lg w-[300px] h-[400px] md:w-[350px] md:h-[400px] flex flex-col justify-between">
         {/* Poster Image */}
-        <div className="relative w-full h-[300px] md:h-[340px] mb-2">
+        <div className="relative w-full h-[300px] md:h-[340px] mb-2 overflow-hidden rounded-md">
           <Image
             src={imageUrl}
             layout="fill"
             objectFit="cover"
             alt={`${title} poster`}
-            className="rounded-md"
+            className="transition-transform duration-300 ease-in-out transform group-hover:scale-110"
           />
         </div>
 
         {/* Title and Rating */}
-        <div className="flex flex-col items-center justify-between text-center">
+        <div className="flex items-center justify-between text-center px-3">
           {/* Truncated Title */}
-          <h3 className="font-semibold text-base md:text-lg truncate line-clamp-2 leading-tight">
+          <h3 className="font-semibold text-base md:text-md truncate line-clamp-2 leading-tight text-wrap">
             {title}
           </h3>
           <div className="flex items-center gap-1 text-yellow-400">
