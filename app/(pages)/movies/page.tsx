@@ -1,6 +1,7 @@
 "use client";
 
 import MediaCard from "@/components/Cards/MediaCard";
+import { LoadingComponent } from "@/components/Loading";
 import { PaginationComponent } from "@/components/Pagination";
 import { fetchLatestMovies } from "@/services/TMDBapi";
 import { Movie } from "@/Types/types";
@@ -36,7 +37,7 @@ const MoviesPage = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center">
-        <p>Loading...</p>
+        <LoadingComponent />
       </div>
     );
   }

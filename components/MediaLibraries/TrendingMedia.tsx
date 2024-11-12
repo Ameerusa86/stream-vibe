@@ -10,6 +10,7 @@ import {
 import { fetchTrendingMovies } from "@/services/TMDBapi";
 import { Movie } from "@/Types/types";
 import LibCard from "../Cards/LibCard";
+import { LoadingComponent } from "../Loading";
 
 const TrendingMedia = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -55,7 +56,7 @@ const TrendingMedia = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingComponent />;
   }
 
   return (

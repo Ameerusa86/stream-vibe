@@ -12,6 +12,7 @@ import { Genre } from "@/Types/types";
 import { fetchGenres } from "@/services/TMDBapi";
 import LibCard from "../Cards/LibCard";
 import GenreCard from "../Cards/GenreCard";
+import { LoadingComponent } from "../Loading";
 
 const Genres = () => {
   const [movies, setMovies] = useState<Genre[]>([]);
@@ -57,7 +58,7 @@ const Genres = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingComponent />;
   }
 
   return (

@@ -11,6 +11,7 @@ import CategoryCard from "../Cards/CategoryCard";
 import { Movie } from "@/Types/types";
 import { fetchLatestMovies } from "@/services/TMDBapi";
 import LibCard from "../Cards/LibCard";
+import { LoadingComponent } from "../Loading";
 
 const NewReleases = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -56,7 +57,7 @@ const NewReleases = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingComponent />;
   }
 
   return (

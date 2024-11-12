@@ -1,5 +1,6 @@
 "use client";
 
+import { LoadingComponent } from "@/components/Loading";
 import { Movies_Library } from "@/components/StreamLib/MoviesLib";
 import { TVShows_Library } from "@/components/StreamLib/TVShowsLib";
 import { Button } from "@/components/ui/button";
@@ -66,7 +67,7 @@ const Movies_TVshows = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center">
-        <p>Loading...</p>
+        <LoadingComponent />
       </div>
     );
   }

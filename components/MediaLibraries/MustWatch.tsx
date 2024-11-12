@@ -11,6 +11,7 @@ import CategoryCard from "../Cards/CategoryCard";
 import { Movie } from "@/Types/types";
 import { fetchTopRatedMovies } from "@/services/TMDBapi";
 import LibCard from "../Cards/LibCard";
+import { LoadingComponent } from "../Loading";
 
 const MustWatch = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -55,7 +56,7 @@ const MustWatch = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingComponent />;
   }
 
   return (
