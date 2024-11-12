@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { HiArrowSmLeft, HiArrowSmRight } from "react-icons/hi";
 import {
   Carousel,
@@ -8,8 +8,14 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import CategoryCard from "../Cards/CategoryCard";
+import { Genre } from "@/Types/types";
+import { fetchGenres } from "@/services/TMDBapi";
+import LibCard from "../Cards/LibCard";
+import GenreCard from "../Cards/GenreCard";
 
 const Genres = () => {
+  const [movies, setMovies] = useState<Genre[]>([]);
+  const [loading, setLoading] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
   const scrollAmount = 300;
@@ -33,6 +39,27 @@ const Genres = () => {
     }
     setActiveIndex((prevIndex) => (prevIndex === 3 ? 0 : prevIndex + 1));
   };
+
+  const loadTrendingMovies = async () => {
+    setLoading(true);
+    try {
+      const fetchTrendingMoviesData = await fetchGenres();
+      setMovies(fetchTrendingMoviesData);
+    } catch (error) {
+      console.error("Failed to load trending movies", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadTrendingMovies();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       {/* Section Header and Controls */}
@@ -68,10 +95,10 @@ const Genres = () => {
           ref={carouselRef}
           className="flex overflow-x-scroll no-scrollbar -ml-1"
         >
-          {Array.from({ length: 10 }).map((_, index) => (
+          {movies.map((genre, index) => (
             <CarouselItem key={index} className="pl-1 lg:basis-auto ml-3 mt-3">
-              <div className="shadow-lg rounded-lg">
-                <CategoryCard title={`Category ${index + 1}`} />
+              <div className="flex flex-wrap justify-center gap-4 mt-6">
+                <GenreCard genre={genre} type="movie" />
               </div>
             </CarouselItem>
           ))}

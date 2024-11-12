@@ -2,7 +2,7 @@
 
 import MediaCard from "@/components/Cards/MediaCard";
 import { PaginationComponent } from "@/components/Pagination";
-import { fetchMovies } from "@/services/TMDBapi";
+import { fetchLatestMovies } from "@/services/TMDBapi";
 import { Movie } from "@/Types/types";
 import React, { useEffect, useState } from "react";
 
@@ -15,7 +15,7 @@ const MoviesPage = () => {
   const loadMovies = async (page: number) => {
     setLoading(true);
     try {
-      const moviesData = await fetchMovies(page);
+      const moviesData = await fetchLatestMovies(page);
       setMovies(moviesData);
       console.log("Movies loaded for page:", page);
     } catch (error) {

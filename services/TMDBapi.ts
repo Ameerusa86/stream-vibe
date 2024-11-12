@@ -2,6 +2,7 @@ import {
   ApiResponse,
   CastMember,
   CreditsResponse,
+  Genre,
   Movie,
   TvShow,
 } from "@/Types/types";
@@ -26,6 +27,19 @@ export const fetchMovies = async (page: number = 1): Promise<Movie[]> => {
     return response.data.results || [];
   } catch (error) {
     console.error("Error fetching movies:", error);
+    throw error;
+  }
+};
+
+// Get Movie Genres
+export const fetchGenres = async (): Promise<Genre[]> => {
+  try {
+    const response = await apiClient.get<ApiResponse<Genre>>(
+      "/genre/movie/list"
+    );
+    return response.data.genres || [];
+  } catch (error) {
+    console.error("Error fetching genres:", error);
     throw error;
   }
 };
@@ -128,6 +142,42 @@ export const fetchLatestMovies = async (page: number = 1): Promise<Movie[]> => {
     return response.data.results || [];
   } catch (error) {
     console.error("Error fetching latest movies:", error);
+    throw error;
+  }
+};
+
+// Upcoming Movies
+export const fetchUpcomingMovies = async (
+  page: number = 1
+): Promise<Movie[]> => {
+  try {
+    const response = await apiClient.get<ApiResponse<Movie>>(
+      "/movie/upcoming",
+      {
+        params: { page },
+      }
+    );
+    return response.data.results || [];
+  } catch (error) {
+    console.error("Error fetching upcoming movies:", error);
+    throw error;
+  }
+};
+
+// Top Rated Movies
+export const fetchTopRatedMovies = async (
+  page: number = 1
+): Promise<Movie[]> => {
+  try {
+    const response = await apiClient.get<ApiResponse<Movie>>(
+      "/movie/top_rated",
+      {
+        params: { page },
+      }
+    );
+    return response.data.results || [];
+  } catch (error) {
+    console.error("Error fetching top rated movies:", error);
     throw error;
   }
 };

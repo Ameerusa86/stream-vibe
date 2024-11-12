@@ -4,6 +4,7 @@
 export interface Genre {
   id: number;
   name: string;
+  poster_path?: string;
 }
 
 // Movie interface representing the structure of movie data
