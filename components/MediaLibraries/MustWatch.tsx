@@ -68,7 +68,7 @@ const MustWatch = ({ type }: TrendingMediaProps) => {
       {/* Section Header and Controls */}
       <div className="flex items-center justify-between mt-6 mb-6">
         <h1 className="font-semibold text-lg md:text-xl">
-          Must - Watch Movies
+          Must - Watch {type === "movie" ? "Movies" : "TV Shows"}
         </h1>
         <div className="flex items-center gap-3">
           <div

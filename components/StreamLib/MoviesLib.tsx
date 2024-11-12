@@ -51,7 +51,7 @@ export const Movies_Library = () => {
         <Genres />
         <TrendingMovies type="movie" />
         <NewReleases />
-        <MustWatch />
+        <MustWatch type="movie" />
       </div>
     </Wrapper>
   );
