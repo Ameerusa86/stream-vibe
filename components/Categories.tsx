@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import React, { useState, useRef, useEffect } from "react";
 import Wrapper from "./Wrapper";
 import { HiArrowSmLeft, HiArrowSmRight } from "react-icons/hi";
 import CategoryCard from "./Cards/CategoryCard";
@@ -16,9 +15,6 @@ import GenreCard from "./Cards/GenreCard";
 import { fetchGenres } from "@/services/TMDBapi";
 
 const Categories = () => {
-  const [movies, setMovies] = useState<Genre[]>([]);
-  const [loading, setLoading] = useState(true);
-
   const [movies, setMovies] = useState<Genre[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -46,26 +42,6 @@ const Categories = () => {
     }
     setActiveIndex((prevIndex) => (prevIndex === 3 ? 0 : prevIndex + 1));
   };
-
-  const loadTrendingMovies = async () => {
-    setLoading(true);
-    try {
-      const fetchTrendingMoviesData = await fetchGenres();
-      setMovies(fetchTrendingMoviesData);
-    } catch (error) {
-      console.error("Failed to load trending movies", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    loadTrendingMovies();
-  }, []);
-
-  if (loading) {
-    return <LoadingComponent />;
-  }
 
   const loadTrendingMovies = async () => {
     setLoading(true);
@@ -132,10 +108,8 @@ const Categories = () => {
           className="flex overflow-x-scroll no-scrollbar -ml-1"
         >
           {movies.map((genre, index) => (
-          {movies.map((genre, index) => (
             <CarouselItem key={index} className="pl-1 lg:basis-auto ml-3 mt-3">
               <div className="shadow-lg rounded-lg">
-                <GenreCard genre={genre} type="movie" />
                 <GenreCard genre={genre} type="movie" />
               </div>
             </CarouselItem>
