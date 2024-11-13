@@ -252,3 +252,32 @@ export const fetchOnTheAirTvShows = async (
     throw error;
   }
 };
+
+// Discover Movies, used for filtering
+export const discoverMovies = async (page: number = 1): Promise<Movie[]> => {
+  try {
+    const response = await apiClient.get<ApiResponse<Movie>>(
+      "/discover/movie",
+      {
+        params: { page },
+      }
+    );
+    return response.data.results || [];
+  } catch (error) {
+    console.error("Error fetching movies:", error);
+    throw error;
+  }
+};
+
+// Discover TV Shows, used for filtering
+export const discoverTvShows = async (page: number = 1): Promise<TvShow[]> => {
+  try {
+    const response = await apiClient.get<ApiResponse<TvShow>>("/discover/tv", {
+      params: { page },
+    });
+    return response.data.results || [];
+  } catch (error) {
+    console.error("Error fetching TV shows:", error);
+    throw error;
+  }
+};
