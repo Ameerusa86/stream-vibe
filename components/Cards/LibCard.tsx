@@ -31,7 +31,10 @@ const LibCard: React.FC<LibCardProps> = ({ item, type }) => {
   const releaseYear = releaseDate ? new Date(releaseDate).getFullYear() : "N/A";
 
   return (
-    <Link href={`/movies/${type}/${item.id}`} className="group">
+    <Link
+      href={`/${type === "movie" ? "movies" : "tvshows"}/${type}/${item.id}`}
+      className="group"
+    >
       <div className="bg-black-10 p-5 rounded-lg shadow-lg w-[200px] sm:w-[240px] lg:w-[280px] h-[400px] mx-auto text-white transform transition-transform duration-300 group-hover:scale-105">
         {/* Poster Image */}
         <div className="relative w-full h-[85%] mb-3 overflow-hidden rounded-md">
