@@ -98,23 +98,23 @@ export const fetchTrendingMedia = async (
 };
 
 // Fetch details for a specific movie
-export const fetchMovieDetails = async (movieId: number): Promise<Movie> => {
+export const fetchMovieDetails = async (id: string): Promise<Movie> => {
   try {
-    const response = await apiClient.get<Movie>(`/movie/${movieId}`);
+    const response = await apiClient.get<Movie>(`/movie/${id}`);
     return response.data;
   } catch (error) {
-    console.error(`Error fetching details for movie ID ${movieId}:`, error);
+    console.error(`Error fetching details for movie ID ${id}:`, error);
     throw error;
   }
 };
 
 // Fetch details for a specific TV show
-export const fetchTvShowDetails = async (tvShowId: number): Promise<TvShow> => {
+export const fetchTvShowDetails = async (id: string): Promise<TvShow> => {
   try {
-    const response = await apiClient.get<TvShow>(`/tv/${tvShowId}`);
+    const response = await apiClient.get<TvShow>(`/tv/${id}`);
     return response.data;
   } catch (error) {
-    console.error(`Error fetching details for TV show ID ${tvShowId}:`, error);
+    console.error(`Error fetching details for TV show ID ${id}:`, error);
     throw error;
   }
 };

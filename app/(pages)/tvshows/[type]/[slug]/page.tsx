@@ -1,6 +1,7 @@
 "use client";
 
 import ReviewCard from "@/components/Cards/ReviewCard";
+import Cast from "@/components/Credits/Cast";
 import { Button } from "@/components/ui/button";
 import {
   Carousel,
@@ -9,8 +10,11 @@ import {
 } from "@/components/ui/carousel";
 import Wrapper from "@/components/Wrapper";
 import { images } from "@/public/images";
+import { fetchTvShowCredits, fetchTvShowDetails } from "@/services/TMDBapi";
+import { CastMember, TvShow } from "@/Types/types";
 import Image from "next/image";
-import React, { useRef, useState } from "react";
+import { useParams } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
 import {
   HiArrowSmLeft,
   HiArrowSmRight,
@@ -21,9 +25,16 @@ import {
   HiPlay,
 } from "react-icons/hi";
 
-const MoviesPage = () => {
+const TVShowsDetailsPage = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
+  const castCarouselRef = useRef<HTMLDivElement>(null); // Separate ref for cast
+  const { type, slug } = useParams();
+  const [loading, setLoading] = useState(true);
+  const [tvshow, setTvShow] = useState<TvShow | null>(null);
+  const [cast, setCast] = useState<CastMember[]>([]);
+
+  const imgUrl = "https://image.tmdb.org/t/p/original";
 
   const scrollAmount = 300;
 
@@ -46,12 +57,73 @@ const MoviesPage = () => {
     }
     setActiveIndex((prevIndex) => (prevIndex === 3 ? 0 : prevIndex + 1));
   };
+
+  const handleCastLeftClick = () => {
+    if (castCarouselRef.current) {
+      castCarouselRef.current.scrollBy({
+        left: -scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const handleCastRightClick = () => {
+    if (castCarouselRef.current) {
+      castCarouselRef.current.scrollBy({
+        left: scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (type && slug) {
+      const loadTVShowDetails = async () => {
+        setLoading(true);
+        try {
+          const movieData = await fetchTvShowDetails(
+            Array.isArray(slug) ? slug[0] : slug
+          );
+          setTvShow(movieData);
+        } catch (error) {
+          console.error("Failed to fetch Tv Show details:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      loadTVShowDetails();
+    }
+  }, [type, slug]);
+
+  useEffect(() => {
+    if (tvshow?.id) {
+      const loadCast = async () => {
+        try {
+          const castData = await fetchTvShowCredits(tvshow.id);
+          setCast(castData.cast);
+        } catch (error) {
+          console.error("Failed to fetch cast for TV Show:", error);
+        }
+      };
+      loadCast();
+    }
+  }, [tvshow?.id]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (!tvshow) {
+    return <p>TV Show not found.</p>;
+  }
+
   return (
     <Wrapper>
       <div className="relative flex flex-col items-center justify-center h-[400px] sm:h-[500px] md:h-[650px] lg:h-[835px] rounded-lg overflow-hidden">
         {/* Background Image */}
         <Image
-          src={images.CTA}
+          src={`https://image.tmdb.org/t/p/original${tvshow.backdrop_path}`}
           width={1600}
           height={835}
           alt="background"
@@ -61,13 +133,10 @@ const MoviesPage = () => {
         {/* Text Container */}
         <div className="flex flex-col items-center text-center text-white gap-3 sm:gap-4 md:gap-5 max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl px-4 z-50 drop-shadow-lg mt-40 sm:mt-52 md:mt-60 lg:mt-80">
           <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
-            Avengers: Endgame
+            {tvshow.name}
           </h1>
           <p className="font-medium text-sm sm:text-base md:text-lg text-gray-300">
-            With the help of remaining allies, the Avengers must assemble once
-            more in order to undo Thanos's actions and undo the chaos to the
-            universe, no matter what consequences may be in store, and no matter
-            who they face... Avenge the fallen.
+            {tvshow.overview}
           </p>
 
           {/* Buttons */}
@@ -107,9 +176,7 @@ const MoviesPage = () => {
             Description
           </h1>
           <p className="font-medium text-sm sm:text-base md:text-lg text-white">
-            A fiery young man clashes with an unflinching forest officer in a
-            south Indian village where spirituality, fate and folklore rule the
-            lands.
+            {tvshow.overview}{" "}
           </p>
         </div>
 
@@ -120,18 +187,19 @@ const MoviesPage = () => {
             Release Year
           </h1>
           <p className="font-medium text-sm sm:text-base md:text-lg text-white mb-4">
-            2024
+            {tvshow.first_air_date
+              ? new Date(tvshow.first_air_date).getFullYear()
+              : "N/A"}
           </p>
-          <h1 className="font-medium text-sm sm:text-base md:text-lg text-gray-400 mb-4">
-            Genres
-          </h1>
-          <div className="flex flex-wrap items-center justify-start gap-4">
-            <p className="font-medium text-sm sm:text-base md:text-lg text-white bg-black-12 block rounded-lg px-3 py-2">
-              Action
-            </p>
-            <p className="font-medium text-sm sm:text-base md:text-lg text-white bg-black-12 block rounded-lg px-3 py-2">
-              Action
-            </p>
+          <div className="flex flex-wrap gap-2">
+            {tvshow.genres?.map((genre) => (
+              <span
+                key={genre.id}
+                className="text-white bg-black-12 px-3 py-2 rounded-lg"
+              >
+                {genre.name}
+              </span>
+            ))}
           </div>
         </div>
 
@@ -145,7 +213,7 @@ const MoviesPage = () => {
               {/* Left Arrow */}
               <div
                 className="bg-black-12 ring-black-12 p-4 rounded-full hover:bg-black-25 cursor-pointer"
-                onClick={handleLeftClick}
+                onClick={handleCastLeftClick}
               >
                 <HiArrowSmLeft size={20} />
               </div>
@@ -153,7 +221,7 @@ const MoviesPage = () => {
               {/* Right Arrow */}
               <div
                 className="bg-black-12 ring-black-12 p-4 rounded-full  hover:bg-black-25 cursor-pointer"
-                onClick={handleRightClick}
+                onClick={handleCastRightClick}
               >
                 <HiArrowSmRight size={20} />
               </div>
@@ -163,20 +231,18 @@ const MoviesPage = () => {
           <div className="flex items-start justify-start gap-3">
             <Carousel className="mt-10 flex items-center justify-center gap-8 w-full">
               <CarouselContent
-                ref={carouselRef}
+                ref={castCarouselRef}
                 className="flex overflow-x-scroll no-scrollbar -ml-1"
               >
-                {Array.from({ length: 10 }).map((_, index) => (
+                {cast.map((member, index) => (
                   <CarouselItem key={index} className="pl-1 lg:basis-auto ml-3">
-                    <div className="shadow-lg rounded-lg">
-                      <Image
-                        src={"/images/img.png"}
-                        width={500}
-                        height={500}
-                        alt="cast"
-                        className="rounded-lg w-[110px] h-[110px] object-cover"
-                      />
-                    </div>
+                    <Cast
+                      name={member.name}
+                      character={member.character || "Unknown"}
+                      CastImage={
+                        member.profile_path || "/images/default-profile.png"
+                      }
+                    />
                   </CarouselItem>
                 ))}
               </CarouselContent>
@@ -237,4 +303,4 @@ const MoviesPage = () => {
   );
 };
 
-export default MoviesPage;
+export default TVShowsDetailsPage;

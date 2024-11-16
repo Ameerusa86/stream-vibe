@@ -7,9 +7,10 @@ import { Movie, TvShow } from "@/Types/types";
 interface MediaCardProps {
   item: Movie | TvShow;
   type: "movie" | "tv";
+  slug: string;
 }
 
-const MediaCard: React.FC<MediaCardProps> = ({ item, type }) => {
+const MediaCard: React.FC<MediaCardProps> = ({ item, type, slug }) => {
   const imageUrl = item.poster_path
     ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
     : item.backdrop_path
@@ -25,7 +26,10 @@ const MediaCard: React.FC<MediaCardProps> = ({ item, type }) => {
   const rating = item.vote_average ? item.vote_average.toFixed(1) : "N/A";
 
   return (
-    <Link href={`/movies/${title}`} className="group">
+    <Link
+      href={`/${type === "movie" ? "movies" : "tvshows"}/${type}/${item.id}`}
+      className="group"
+    >
       <div className="bg-black-10 p-4 rounded-lg shadow-lg w-[300px] h-[400px] md:w-[350px] md:h-[400px] flex flex-col justify-between">
         {/* Poster Image */}
         <div className="relative w-full h-[300px] md:h-[340px] mb-2 overflow-hidden rounded-md">

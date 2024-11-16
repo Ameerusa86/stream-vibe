@@ -71,6 +71,7 @@ export interface CastMember {
   name: string;
   character?: string;
   profile_path?: string;
+  gender?: number;
 }
 
 export interface CreditsResponse {

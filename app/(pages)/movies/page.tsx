@@ -47,7 +47,12 @@ const MoviesPage = () => {
       {/* Media Cards */}
       <div className="flex items-center justify-center flex-wrap gap-4">
         {movies.map((movie) => (
-          <MediaCard key={movie.id} item={movie} type="movie" />
+          <MediaCard
+            key={movie.id}
+            item={movie}
+            type="movie"
+            slug={movie.title}
+          />
         ))}
       </div>
 
