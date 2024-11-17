@@ -7,10 +7,9 @@ import { Movie, TvShow } from "@/Types/types";
 interface MediaCardProps {
   item: Movie | TvShow;
   type: "movie" | "tv";
-  slug: string;
 }
 
-const MediaCard: React.FC<MediaCardProps> = ({ item, type, slug }) => {
+const MediaCard: React.FC<MediaCardProps> = ({ item, type }) => {
   const imageUrl = item.poster_path
     ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
     : item.backdrop_path
