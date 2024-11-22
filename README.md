@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Stream Vibe 🎥
+![image](https://github.com/user-attachments/assets/d4bfa96b-9918-4ceb-83f2-830b6c821219)
 
-## Getting Started
+Stream Vibe is a modern and intuitive movie website that allows users to explore and discover movies seamlessly. Built with cutting-edge technologies, Stream Vibe provides a clean interface and a dynamic user experience, leveraging the power of the TMDB API for real-time movie data.
 
-First, run the development server:
+## Features 🚀
 
+- **Responsive Design**: Optimized for all devices using Tailwind CSS.
+- **Authentication**: Secure user authentication with NextAuth.
+- **Dynamic Content**: Fetch and display movie data dynamically using the TMDB API.
+- **Modern UI**: Built with Shadcn components for a professional and sleek interface.
+- **Performance**: Developed using Next.js 15 for fast and scalable performance.
+
+---
+
+## Tech Stack 🛠️
+
+### Frontend
+- **[Next.js 15](https://nextjs.org/)**: React-based framework for building fast web applications.
+- **[Shadcn](https://shadcn.dev/)**: Pre-built UI components for consistency and quality.
+- **[Tailwind CSS](https://tailwindcss.com/)**: Utility-first CSS framework for responsive and customizable styling.
+
+### Backend
+- **[TMDB API](https://www.themoviedb.org/documentation/api)**: Source of all movie and TV show data.
+- **[NextAuth](https://next-auth.js.org/)**: Authentication library for secure and extensible login functionality.
+
+---
+
+## Getting Started 🏁
+
+Follow these instructions to set up and run Stream Vibe locally:
+
+### Prerequisites
+- Node.js v18+ installed on your system.
+- TMDB API key. Sign up at [TMDB](https://www.themoviedb.org/) to get your API key.
+- Environment variables for authentication setup (e.g., Google or GitHub providers with NextAuth).
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/stream-vibe.git
+   cd stream-vibe
+    ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Set up environment variables: Create a .env.local file in the root directory and add the following:
+```bash
+NEXT_PUBLIC_TMDB_API_KEY=your_tmdb_api_key
+NEXTAUTH_SECRET=your_nextauth_secret
+NEXTAUTH_URL=http://localhost:3000
+```
+4. Start the development server:
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
+5. Open your browser and visit http://localhost:3000
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Usage 🖥️
+1. Explore Movies: Browse through the latest and popular movies fetched directly from TMDB.
+2. User Authentication: Log in securely with Google, GitHub, or email authentication.
+3. Dynamic Content: Enjoy personalized experiences with dynamically loaded data.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deployment 🚀
+You can deploy Stream Vibe on any platform that supports Node.js. Popular options include:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Vercel
+Netlify
+Follow the deployment instructions of your chosen platform and ensure all environment variables are correctly configured.
