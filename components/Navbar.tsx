@@ -77,7 +77,9 @@ const Navbar = () => {
 
         {/* Icons */}
         <div className="lg:flex hidden items-center gap-4 text-white">
-          <HiOutlineSearch size={24} className="cursor-pointer" />
+          <Link href={"/search"}>
+            <HiOutlineSearch size={24} className="cursor-pointer" />
+          </Link>
           <HiOutlineBell size={24} className="cursor-pointer" />
         </div>
       </div>

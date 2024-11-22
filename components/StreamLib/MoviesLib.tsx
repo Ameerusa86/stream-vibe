@@ -2,13 +2,6 @@
 
 import React, { useRef, useState } from "react";
 import Wrapper from "../Wrapper";
-import CategoryCard from "../Cards/CategoryCard";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
-import { HiArrowSmLeft, HiArrowSmRight } from "react-icons/hi";
 import TrendingMovies from "../MediaLibraries/TrendingMedia";
 import Genres from "../MediaLibraries/Genres";
 import NewReleases from "../MediaLibraries/NewReleases";
