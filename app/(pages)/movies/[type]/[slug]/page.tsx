@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import Wrapper from "@/components/Wrapper";
 import ReviewCard from "@/components/Cards/ReviewCard";
 import { fetchMovieCredits, fetchMovieDetails } from "@/services/TMDBapi";
-import { CastMember, Movie } from "@/Types/types";
+import { CastMember, Movie, PersonCast } from "@/Types/types";
 import {
   HiOutlineHeart,
   HiOutlineVolumeUp,
@@ -20,6 +20,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import Cast from "@/components/Credits/Cast";
+import Link from "next/link";
 
 const MovieDetailsPage = () => {
   const { type, slug } = useParams(); // Destructure `type` and `slug` from useParams
@@ -160,7 +161,7 @@ const MovieDetailsPage = () => {
         </div>
         {/* Cast Section */}
         <div className="col-span-1 sm:col-span-2 lg:col-span-3 lg:row-span-2 bg-black-10 rounded-xl p-4 sm:p-6 md:p-8">
-          <div className=" flex items-center justify-between">
+          <div className="flex items-center justify-between">
             <h1 className="font-medium text-sm sm:text-base md:text-lg text-gray-400 mb-4">
               Cast
             </h1>
@@ -192,12 +193,14 @@ const MovieDetailsPage = () => {
               >
                 {cast.map((member, index) => (
                   <CarouselItem key={index} className="pl-1 lg:basis-auto ml-3">
-                    <Cast
-                      name={member.name}
-                      character={member.character || "Unknown"}
-                      CastImage={member.profile_path}
-                      gender={member.gender}
-                    />
+                    <Link href={`/cast/${member.id}`}>
+                      <Cast
+                        name={member.name}
+                        character={member.character || "Unknown"}
+                        CastImage={member.profile_path}
+                        gender={member.gender}
+                      />
+                    </Link>
                   </CarouselItem>
                 ))}
               </CarouselContent>

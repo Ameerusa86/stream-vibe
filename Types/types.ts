@@ -79,3 +79,19 @@ export interface CreditsResponse {
   cast: CastMember[];
   crew: CastMember[];
 }
+
+export interface PersonCast {
+  id: number;
+  name: string;
+  biography: string;
+  profile_path: string;
+  birthday: string | null;
+  place_of_birth: string | null;
+  known_for_department: string;
+  known_for: {
+    id: number;
+    title?: string; // For movies
+    name?: string; // For TV shows
+    poster_path: string;
+  }[];
+}

@@ -4,6 +4,7 @@ import {
   CreditsResponse,
   Genre,
   Movie,
+  PersonCast,
   TvShow,
 } from "@/Types/types";
 import axios from "axios";
@@ -279,5 +280,38 @@ export const discoverTvShows = async (page: number = 1): Promise<TvShow[]> => {
   } catch (error) {
     console.error("Error fetching TV shows:", error);
     throw error;
+  }
+};
+
+// Search for Cast details for a specific movie and TV show
+export const searchPersonDetails = async (
+  query: string
+): Promise<CreditsResponse> => {
+  try {
+    const response = await apiClient.get<CreditsResponse>(`/search/person`, {
+      params: { query },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching credits for media ${query}:`, error);
+    throw error;
+  }
+};
+
+// Fetch details for a specific cast member
+export const fetchPersonDetails = async (
+  personId: number
+): Promise<PersonCast> => {
+  try {
+    const response = await apiClient.get<PersonCast>(`/person/${personId}`);
+    return response.data;
+  } catch (error: any) {
+    console.error(
+      `Error fetching details for cast ID ${personId}:`,
+      error?.response?.data || error.message
+    );
+    throw new Error(
+      error?.response?.data?.status_message || "Failed to fetch person details."
+    );
   }
 };
