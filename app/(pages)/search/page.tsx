@@ -101,8 +101,8 @@ const SearchPage = () => {
               <div className="space-y-4">
                 <h2 className="text-xl font-semibold text-white">TV Shows</h2>
                 <div className="flex gap-3 flex-wrap">
-                  {results.tvShows.map((tvShow) => (
-                    <MediaCard slug="" item={tvShow} type="tv" />
+                  {results.tvShows.map((tvShow, index) => (
+                    <MediaCard slug="" item={tvShow} type="tv" key={index} />
                   ))}
                 </div>
               </div>
