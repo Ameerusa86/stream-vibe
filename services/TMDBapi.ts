@@ -298,20 +298,22 @@ export const searchPersonDetails = async (
   }
 };
 
-// Fetch details for a specific cast member
-export const fetchPersonDetails = async (
-  personId: number
-): Promise<PersonCast> => {
+// Fetch details for a specific actor, including "Known For" movies
+export const fetchPersonDetails = async (personId: number) => {
   try {
-    const response = await apiClient.get<PersonCast>(`/person/${personId}`);
-    return response.data;
-  } catch (error: any) {
-    console.error(
-      `Error fetching details for cast ID ${personId}:`,
-      error?.response?.data || error.message
+    // Fetch the actor's details
+    const personDetails = await apiClient.get(`/person/${personId}`);
+    // Fetch the actor's movie credits
+    const movieCredits = await apiClient.get(
+      `/person/${personId}/movie_credits`
     );
-    throw new Error(
-      error?.response?.data?.status_message || "Failed to fetch person details."
-    );
+
+    return {
+      ...personDetails.data,
+      known_for: movieCredits.data.cast.slice(0, 10), // Top 10 movies sorted by popularity
+    };
+  } catch (error) {
+    console.error(`Failed to fetch details for person ID ${personId}:`, error);
+    throw new Error("Failed to fetch person details.");
   }
 };

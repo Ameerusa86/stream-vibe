@@ -6,12 +6,22 @@ import { fetchPersonDetails } from "@/services/TMDBapi";
 import Wrapper from "@/components/Wrapper";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { useKeenSlider } from "keen-slider/react";
+import "keen-slider/keen-slider.min.css";
 
 const ActorDetailsPage = () => {
   const { id } = useParams(); // Retrieve actor ID from the route
   const [actor, setActor] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const [showFullBio, setShowFullBio] = useState(false); // Track whether to show full biography
+
+  const [sliderRef] = useKeenSlider<HTMLDivElement>({
+    loop: true,
+    slides: {
+      perView: 5,
+      spacing: 16,
+    },
+  });
 
   useEffect(() => {
     if (id) {
@@ -57,21 +67,13 @@ const ActorDetailsPage = () => {
           <div className="flex-shrink-0">
             {actor.profile_path && (
               <Image
-                src={`https://image.tmdb.org/t/p/w500${actor.profile_path}`}
+                src={`https://image.tmdb.org/t/p/original${actor.profile_path}`}
                 alt={actor.name}
-                width={300}
-                height={450}
-                className="rounded-lg shadow-lg"
+                width={350}
+                height={525}
+                className="rounded-lg shadow-lg object-cover"
               />
             )}
-            {/* Social Media Icons */}
-            <div className="flex items-center justify-start gap-4 mt-4 text-muted-foreground text-2xl">
-              <i className="fab fa-twitter cursor-pointer"></i>
-              <i className="fab fa-facebook cursor-pointer"></i>
-              <i className="fab fa-instagram cursor-pointer"></i>
-              <i className="fab fa-youtube cursor-pointer"></i>
-              <i className="fab fa-tiktok cursor-pointer"></i>
-            </div>
           </div>
 
           {/* Main Content */}
@@ -83,7 +85,7 @@ const ActorDetailsPage = () => {
                 ? actor.biography
                 : `${actor.biography.substring(0, 1000)}...`}
             </p>
-            {actor.biography && actor.biography.length > 1000 && (
+            {actor.biography && actor.biography.length > 500 && (
               <Button
                 onClick={() => setShowFullBio(!showFullBio)}
                 className="text-accent cursor-pointer bg-blue-900 hover:bg-blue-800 mt-5"
@@ -91,74 +93,35 @@ const ActorDetailsPage = () => {
                 {showFullBio ? "Show Less" : "Read More"}
               </Button>
             )}
+          </div>
+        </div>
 
-            <div className="flex gap-4 overflow-x-auto mt-4 no-scrollbar">
-              {actor.known_for?.map((movie: any, index: number) => (
+        {/* Known For Section */}
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold text-white">Known For</h2>
+          {actor.known_for?.length > 0 ? (
+            <div
+              ref={sliderRef}
+              className="keen-slider mt-4 flex overflow-hidden"
+            >
+              {actor.known_for.map((movie: any, index: number) => (
                 <div
                   key={index}
-                  className="min-w-[150px] shadow-lg rounded-lg overflow-hidden bg-card"
+                  className="keen-slider__slide bg-card rounded-lg shadow-lg overflow-hidden flex flex-col items-center"
                 >
                   <Image
-                    src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-                    alt={movie.title || movie.name}
-                    width={150}
-                    height={225}
-                    className="object-cover"
+                    src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+                    alt={movie.title || "Untitled"}
+                    width={500}
+                    height={500}
+                    className="rounded-t-lg object-cover w-full"
                   />
-                  <p className="text-sm font-medium text-center mt-2 text-card-foreground">
-                    {movie.title || movie.name}
-                  </p>
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-
-        {/* Personal Info Section */}
-        <div className="mt-12 bg-card p-6 rounded-lg shadow-lg">
-          <h2 className="text-2xl font-bold text-primary">Personal Info</h2>
-          <ul className="mt-4 space-y-2">
-            <li>
-              <strong>Known For:</strong> {actor.known_for_department || "N/A"}
-            </li>
-            <li>
-              <strong>Known Credits:</strong> {actor.known_credits || "N/A"}
-            </li>
-            <li>
-              <strong>Gender:</strong> {actor.gender === 1 ? "Female" : "Male"}
-            </li>
-            <li>
-              <strong>Birthday:</strong> {actor.birthday || "N/A"}
-            </li>
-            <li>
-              <strong>Place of Birth:</strong> {actor.place_of_birth || "N/A"}
-            </li>
-          </ul>
-        </div>
-
-        {/* Acting Credits */}
-        <div className="mt-12">
-          <h2 className="text-2xl font-bold text-primary">Acting</h2>
-          <div className="mt-4 border-t border-border">
-            {actor.movie_credits?.cast?.map((role: any, index: number) => (
-              <div
-                key={index}
-                className="py-4 flex justify-between items-center border-b border-border"
-              >
-                <div>
-                  <p className="text-lg font-medium text-card-foreground">
-                    {role.title || role.name}
-                  </p>
-                  <p className="text-muted-foreground">
-                    as {role.character || "Unknown"}
-                  </p>
-                </div>
-                <span className="text-sm text-muted-foreground">
-                  {role.release_date?.split("-")[0] || "N/A"}
-                </span>
-              </div>
-            ))}
-          </div>
+          ) : (
+            <p className="text-muted-foreground mt-4">No movies found.</p>
+          )}
         </div>
       </div>
     </Wrapper>
