@@ -13,6 +13,7 @@ import { images } from "@/public/images";
 import { fetchTvShowCredits, fetchTvShowDetails } from "@/services/TMDBapi";
 import { CastMember, TvShow } from "@/Types/types";
 import Image from "next/image";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -236,13 +237,15 @@ const TVShowsDetailsPage = () => {
               >
                 {cast.map((member, index) => (
                   <CarouselItem key={index} className="pl-1 lg:basis-auto ml-3">
-                    <Cast
-                      name={member.name}
-                      character={member.character || "Unknown"}
-                      CastImage={
-                        member.profile_path || "/images/default-profile.png"
-                      }
-                    />
+                    <Link href={`/cast/${member.id}`}>
+                      <Cast
+                        name={member.name}
+                        character={member.character || "Unknown"}
+                        CastImage={
+                          member.profile_path || "/images/default-profile.png"
+                        }
+                      />
+                    </Link>
                   </CarouselItem>
                 ))}
               </CarouselContent>

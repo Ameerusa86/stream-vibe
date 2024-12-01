@@ -8,6 +8,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
+import Link from "next/link";
 
 const ActorDetailsPage = () => {
   const { id } = useParams(); // Retrieve actor ID from the route
@@ -22,6 +23,8 @@ const ActorDetailsPage = () => {
       spacing: 16,
     },
   });
+
+  const [type, setType] = useState<"movie" | "tv">("movie");
 
   useEffect(() => {
     if (id) {
@@ -109,13 +112,21 @@ const ActorDetailsPage = () => {
                   key={index}
                   className="keen-slider__slide bg-card rounded-lg shadow-lg overflow-hidden flex flex-col items-center"
                 >
-                  <Image
-                    src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
-                    alt={movie.title || "Untitled"}
-                    width={500}
-                    height={500}
-                    className="rounded-t-lg object-cover w-full"
-                  />
+                  <Link
+                    href={`/movies/${type === "movie" ? "movies" : "tvshows"}/${
+                      movie.id
+                    }`}
+                  >
+                    <Image
+                      src={`https://image.tmdb.org/t/p/original${
+                        movie.poster_path || movie.backdrop_path
+                      }`}
+                      alt={movie.title || "Untitled"}
+                      width={500}
+                      height={500}
+                      className="rounded-t-lg object-cover w-full"
+                    />
+                  </Link>
                 </div>
               ))}
             </div>
